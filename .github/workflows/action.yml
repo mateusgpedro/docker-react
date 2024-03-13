@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and run tests
+        run: |
+          docker build -t mateusgpedro/docker-react -f Dockerfile.dev .
+          docker run -e CI=true mateusgpedro/docker-react npm run test
